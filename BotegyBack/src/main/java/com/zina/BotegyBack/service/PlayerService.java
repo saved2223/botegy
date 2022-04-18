@@ -20,11 +20,12 @@ public class PlayerService {
         return playerRepository.findByEmailIsAndPasswordIs(email, pass);
     }
 
-    public void addPlayer(String nick, String email, String pass){
+    public Player addPlayer(String nick, String email, String pass){
         Player p = new Player();
         p.setNickname(nick);
         p.setEmail(email);
         p.setPassword(pass);
         playerRepository.save(p);
+        return p;
     }
 }
