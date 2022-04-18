@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "player")
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -56,9 +56,5 @@ public class User {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 }

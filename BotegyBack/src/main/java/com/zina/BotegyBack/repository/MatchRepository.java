@@ -1,4 +1,9 @@
 package com.zina.BotegyBack.repository;
 
-public interface MatchRepository extends org.springframework.data.jpa.repository.JpaRepository<com.zina.BotegyBack.entity.Match, java.util.UUID> {
+import com.zina.BotegyBack.entity.Match;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface MatchRepository extends JpaRepository<Match, UUID> {
 }
