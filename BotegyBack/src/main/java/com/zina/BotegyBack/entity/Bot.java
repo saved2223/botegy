@@ -1,5 +1,6 @@
 package com.zina.BotegyBack.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,7 @@ public class Bot {
 
     @Getter
     @Setter
+    @JsonIgnore
     @Column(nullable = false)
     private String filePath;
 

@@ -1,5 +1,7 @@
 package com.zina.BotegyBack.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.UUID;
 
@@ -17,6 +19,7 @@ public class Player {
 
     @Column(nullable = false, unique = true)
     private String email;
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

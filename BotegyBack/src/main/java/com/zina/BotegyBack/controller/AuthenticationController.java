@@ -19,7 +19,7 @@ public class AuthenticationController {
     @PostMapping(value = "/log")
     public ResponseEntity<Player> logIn (@RequestParam String email, @RequestParam String pass){
         final Optional<Player> player = playerService.getPlayerByEmailAndPass(email, pass);
-        return player.isEmpty() ? ResponseEntity.ok(player.get()) : ResponseEntity.notFound().build();
+        return player.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping(value = "/logUp")

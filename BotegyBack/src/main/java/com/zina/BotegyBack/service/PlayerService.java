@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PlayerService {
@@ -20,6 +21,21 @@ public class PlayerService {
         return playerRepository.findByEmailIsAndPasswordIs(email, pass);
     }
 
+    public Player updateNick(UUID id, String nick){
+        Player p = getPlayer(id);
+        p.setNickname(nick);
+        playerRepository.save(p);
+        return p;
+    }
+
+    public void updatePass(UUID id, String pass){
+        getPlayer(id).setPassword(pass);
+    }
+
+    public Player getPlayer(UUID id){
+        return playerRepository.getById(id);
+    }
+
     public Player addPlayer(String nick, String email, String pass){
         Player p = new Player();
         p.setNickname(nick);
@@ -27,5 +43,9 @@ public class PlayerService {
         p.setPassword(pass);
         playerRepository.save(p);
         return p;
+    }
+
+    public void doModer(UUID playerId){
+        playerRepository.getById(playerId).setIsModer(1);
     }
 }

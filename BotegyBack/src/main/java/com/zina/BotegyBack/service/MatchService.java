@@ -6,6 +6,7 @@ import com.zina.BotegyBack.repository.BotRepository;
 import com.zina.BotegyBack.repository.MatchRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,6 +31,10 @@ public class MatchService {
         //match.setWinnerBot(winnerBot);
         matchRepository.save(match);
         return match;
+    }
+
+    public List<Match> getMatchesByBotId(UUID botId){
+        return matchRepository.findByBot1_IdIsOrBot2_IdIs(botId, botId);
     }
 
 }
