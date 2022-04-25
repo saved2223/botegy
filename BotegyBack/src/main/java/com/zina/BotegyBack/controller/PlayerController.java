@@ -28,10 +28,14 @@ public class PlayerController {
     }
 
     @PostMapping(value = "/doModer")
-    public void doPlayerModer(@RequestParam UUID userId){
-        playerService.doModer(userId);
+    public ResponseEntity<Player> doPlayerModer(@RequestParam UUID userId){
+        return ResponseEntity.ok(playerService.doModer(userId));
     }
 
+    @PostMapping(value = "/UnDoModer")
+    public ResponseEntity<Player> UnDoPlayerModer(@RequestParam UUID userId){
+        return ResponseEntity.ok(playerService.unDoModer(userId));
+    }
 
 
 }

@@ -45,7 +45,17 @@ public class PlayerService {
         return p;
     }
 
-    public void doModer(UUID playerId){
-        playerRepository.getById(playerId).setIsModer(1);
+    public Player unDoModer(UUID playerId){
+       Player p = playerRepository.getById(playerId);
+       p.setIsModer(0);
+       playerRepository.save(p);
+       return p;
+    }
+
+    public Player doModer(UUID playerId){
+        Player p = playerRepository.getById(playerId);
+        p.setIsModer(1);
+        playerRepository.save(p);
+        return p;
     }
 }
