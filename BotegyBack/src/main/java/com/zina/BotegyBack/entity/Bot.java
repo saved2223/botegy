@@ -21,11 +21,6 @@ public class Bot {
     @Column(nullable = false)
     private String name;
 
-    @Getter
-    @Setter
-    @JsonIgnore
-    @Column(nullable = false)
-    private String filePath;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
