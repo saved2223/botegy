@@ -1,10 +1,14 @@
-﻿public class ValueBlock : IExpression
+﻿using Model;
+
+public class ValueBlock : IExpression
 {
     private string _value = "";
+    private ValueType _type = ValueType.INT;
 
-    public ValueBlock(string value)
+    public ValueBlock(string value, ValueType type)
     {
         _value = value;
+        _type = type;
     }
 
     public ValueBlock()
@@ -19,5 +23,12 @@
     {
         get => _value;
         set => _value = value;
+    }
+    
+    
+    public ValueType Type
+    {
+        get => _type;
+        set => _type = value;
     }
 }

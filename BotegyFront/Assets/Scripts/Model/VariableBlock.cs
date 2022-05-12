@@ -1,10 +1,13 @@
-﻿public class VariableBlock : IExpression
+﻿using Model;
+
+public class VariableBlock : IExpression
 {
     private string _name = "new_var";
 
     public VariableBlock(string name)
     {
         _name = name;
+
     }
     
     public VariableBlock() {}

@@ -3,28 +3,19 @@ using System.Collections.Generic;
 
 public class LoopBlock : IStatement
 {
-    public enum LoopType
-    {
-        WHILE,
-        FOR
-    }
-    
     private IExpression _cond = null;
     private List<ICode> _code = new List<ICode>();
-    private LoopType _type = LoopType.FOR; 
-    
-    public LoopBlock(IExpression cond, ICode code, LoopType type)
+
+    public LoopBlock(IExpression cond, ICode code)
     {
         _cond = cond;
         _code.Add(code);
-        _type = type;
     }
 
-    public LoopBlock(IExpression cond, List<ICode> code, LoopType type)
+    public LoopBlock(IExpression cond, List<ICode> code)
     {
         _cond = cond;
         _code = code;
-        _type = type;
     }
 
     public LoopBlock()
@@ -33,7 +24,7 @@ public class LoopBlock : IStatement
     }
     public string toString()
     {
-        return _type.ToString().ToLower() + " " + ( _cond == null ? "" : _cond.toString() ) + ":\n" +  insertTabs( listToString());
+        return "while" + ( _cond == null ? "" : _cond.toString() ) + ":\n" +  insertTabs( listToString());
     }
 
     public void addCodeBlock(ICode code)
@@ -65,12 +56,6 @@ public class LoopBlock : IStatement
     {
         get => _code;
         set => _code = value;
-    }
-
-    public LoopType Type
-    {
-        get => _type;
-        set => _type = value;
     }
     
     public string insertTabs(string str)
