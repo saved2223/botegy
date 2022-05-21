@@ -1,3 +1,6 @@
-﻿public interface IStatement : ICode
+﻿namespace Model
 {
+    public interface IStatement : ICode
+    {
+    }
 }

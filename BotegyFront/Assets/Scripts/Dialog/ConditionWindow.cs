@@ -6,14 +6,12 @@ using UnityEngine.UI;
 
 public class ConditionWindow : MonoBehaviour
 {
-    private InputField _inputField;
     private Toggle checkBox;
     private Button cancelButton;
     private Button okButton;
     
     private void Awake()
     {
-        _inputField = gameObject.GetComponentInChildren<InputField>();
         cancelButton = transform.Find("Buttons/CancelButton").GetComponent<Button>();
         okButton = transform.Find("Buttons/OKButton").GetComponent<Button>();
         checkBox = transform.GetComponentInChildren<Toggle>();
@@ -26,9 +24,8 @@ public class ConditionWindow : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Show(string text, bool hasElse, Action onCancel, Action<string, bool> onOk)
+    public void Show(bool hasElse, Action onCancel, Action<bool> onOk)
     {
-        _inputField.text = text;
         checkBox.isOn = hasElse;
         gameObject.SetActive(true);
         
@@ -38,7 +35,7 @@ public class ConditionWindow : MonoBehaviour
         okButton.onClick.AddListener(() =>
         {
             Hide();
-            onOk(_inputField.text, checkBox.isOn);
+            onOk(checkBox.isOn);
         });
         cancelButton.onClick.AddListener(() =>
         {

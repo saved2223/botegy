@@ -1,22 +1,29 @@
-﻿public class BracesBlock : IExpression
+﻿using System.Collections.Generic;
+
+namespace Model
 {
-    private IExpression _expressionBlock = null;
+    public class BracesBlock : IExpression
+    {
+        private IExpression _expressionBlock = null;
 
-    public BracesBlock(IExpression expressionBlock)
-    {
-        _expressionBlock = expressionBlock;
-    }
-    
-    public BracesBlock(){}
-    
-    public string toString()
-    {
-        return "(" + ( _expressionBlock == null ? "" : _expressionBlock.toString() )+ ")";
-    }
+        public BracesBlock(IExpression expressionBlock)
+        {
+            _expressionBlock = expressionBlock;
+        }
 
-    public IExpression ExpressionBlock
-    {
-        get => _expressionBlock;
-        set => _expressionBlock = value;
+        public BracesBlock()
+        {
+        }
+
+        public string GetString(Dictionary<string, VariableBlock> b)
+        {
+            return "(" + (_expressionBlock == null ? "" : _expressionBlock.GetString(b)) + ")";
+        }
+
+        public IExpression ExpressionBlock
+        {
+            get => _expressionBlock;
+            set => _expressionBlock = value;
+        }
     }
 }

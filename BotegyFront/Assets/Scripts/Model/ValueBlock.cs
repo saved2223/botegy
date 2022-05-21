@@ -1,34 +1,43 @@
-﻿using Model;
+﻿using System;
+using System.Collections.Generic;
 
-public class ValueBlock : IExpression
+namespace Model
 {
-    private string _value = "";
-    private ValueType _type = ValueType.INT;
-
-    public ValueBlock(string value, ValueType type)
+    [Serializable]
+    public class ValueBlock : IExpression
     {
-        _value = value;
-        _type = type;
-    }
+        private string _value = "0";
+        private ValueType _valueType = ValueType.INT;
 
-    public ValueBlock()
-    { }
+        public ValueBlock(string value, ValueType valueType)
+        {
+            _value = value;
+            _valueType = valueType;
+        }
 
-    public string toString()
-    {
-        return _value;
-    }
+        public ValueBlock()
+        {
+        }
 
-    public string Value
-    {
-        get => _value;
-        set => _value = value;
-    }
-    
-    
-    public ValueType Type
-    {
-        get => _type;
-        set => _type = value;
+        public string GetString(Dictionary<string, VariableBlock> b)
+        {
+            if (_valueType == ValueType.UNITE)
+                return "'" + _value + "'";
+
+            return _value;
+        }
+
+        public string Value
+        {
+            get => _value;
+            set => _value = value;
+        }
+
+
+        public ValueType Type
+        {
+            get => _valueType;
+            set => _valueType = value;
+        }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,6 @@ public class DropDownWindow : MonoBehaviour
         cancelButton = transform.Find("Buttons/CancelButton").GetComponent<Button>();
         okButton = transform.Find("Buttons/OKButton").GetComponent<Button>();
         
-        // CreateOptionList();
         Hide();
     }
 
@@ -39,7 +39,6 @@ public class DropDownWindow : MonoBehaviour
         okButton.onClick.AddListener(() =>
         {
             Hide();
-            // onOk(_dropdown.value.ToString());
             onOk(_dropdown.options[_dropdown.value].text);
         });
         cancelButton.onClick.AddListener(() =>
@@ -49,11 +48,10 @@ public class DropDownWindow : MonoBehaviour
         });
 
     }
-    
+
     private void CreateOptionList(Type tType)
     {
         _dropdown.ClearOptions();
-        // _dropdown.value = 0;
         if (tType == typeof(BinaryOperatorBlock))
         {
             foreach (BinaryOperator op in Enum.GetValues(typeof(BinaryOperator)))
@@ -61,18 +59,9 @@ public class DropDownWindow : MonoBehaviour
                 _dropdown.options.Add(new Dropdown.OptionData() {text = op.GetOperatorText()});
             }
         }
-
-        else if (tType == typeof(LoopBlock))
-        {
-            foreach (LoopBlock.LoopType op in Enum.GetValues(typeof(LoopBlock.LoopType)))
-            {
-                _dropdown.options.Add(new Dropdown.OptionData() {text = op.ToString().ToLower()});
-            }
-        }
-        
         else if (tType == typeof(FunctionBlock))
         {
-            foreach (FunctionBlock.Functions op in Enum.GetValues(typeof(FunctionBlock.Functions)))
+            foreach (Functions op in Enum.GetValues(typeof(Functions)))
             {
                 _dropdown.options.Add(new Dropdown.OptionData() {text = op.ToString().ToLower()});
             }
