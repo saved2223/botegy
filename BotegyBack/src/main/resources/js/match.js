@@ -1,6 +1,6 @@
-function get_match_results(first_func, second_func) {
-    let field = new Field();
+var field = new Field();
 
+function get_match_results(first_func, second_func) {
     let bot1 = create_bot(first_func);
     let bot2 = create_bot(second_func);
 
@@ -13,4 +13,9 @@ function get_match_results(first_func, second_func) {
     let id = field.play();
 
     return id;
+}
+
+function get_match_log(first_func, second_func) {
+    get_match_results(first_func, second_func);
+    return field.text;
 }

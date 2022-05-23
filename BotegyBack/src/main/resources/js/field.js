@@ -13,6 +13,8 @@ class Field {
     }
 
     play() {
+        this.text = "Начало матча.\n";
+
         let step = 0;
 
         this.field1 = new Array(8);
@@ -31,6 +33,7 @@ class Field {
 
         while (true) {
             if (step >= 40) {
+                this.write_result(2);
                 return 2;
             }
 
@@ -42,7 +45,10 @@ class Field {
 
             let id = this.check_field();
 
-            if (id != -1) return id
+            if (id != -1) {
+                this.write_result(id);
+                return id;
+            }
 
             this.move_forward();
             this.turn = !this.turn;
@@ -152,19 +158,28 @@ class Field {
                     if (current_field[i][j] != null) {
                         if (current_field[i][j].hp - this.damage[i][j] <= current_field[i][j].max_hp) {
                             current_field[i][j].hp -= this.damage[i][j];
+
+                            this.write_heal(i, j, current_field[i][j]);
                         }
                     }
 
                 } else {
                     if (opponent_field[i][j] != null) {
                         opponent_field[i][j].hp -= this.damage[i][j];
-                        if (opponent_field[i][j].hp <= 0) opponent_field[i][j] = null;
+                        if (this.damage[i][j] > 0)
+                            this.write_attack(i, j, opponent_field[i][j]);
+                        if (opponent_field[i][j].hp <= 0) {
+                            this.write_unite_death(i, j, opponent_field[i][j]);
+                            opponent_field[i][j] = null;
+                        }
                     }
 
                 }
             }
         }
         if (this.turn) this.player1.hp -= this.fortress_damage; else this.player2.hp -= this.fortress_damage;
+        if (this.fortress_damage > 0)
+            this.write_fortress_attack();
     }
 
 
@@ -213,8 +228,44 @@ class Field {
                 this.damage[y_coord][x_coord] += unite.damage;
             }
         }
+    }
 
 
+    write_attack(i, j, unite) {
+        this.text += "Атака игроком " + (this.turn + 1)
+            + ": юнит " + unite.name
+            + ", клетка (" + i + ", " + j + "), " +
+            "ед. урона " + this.damage[i][j] + "\n";
+
+    }
+
+    write_heal(i, j, unite) {
+        this.text += "Лечение игроком " + (this.turn + 1)
+            + ": юнит " + unite.name
+            + ", клетка (" + i + ", " + j + "), " +
+            "ед. здоровья " + (this.damage[i][j] * -1) + "\n";
+    }
+
+    write_fortress_attack() {
+        this.text += "Атака крепости игроком " + (this.turn + 1)
+            + ": ед. урона " + this.fortress_damage + "\n";
+    }
+
+    write_unite_death(i, j, unite) {
+        this.text += "Выход из строя юнита игрока " + (this.turn + 1)
+            + ": юнит " + unite.name
+            + ", клетка (" + i + ", " + j + ")\n";
+    }
+
+    write_result(result){
+        this.text += "Матч завершился. ";
+
+        if (result == 2) {
+            this.text += "Ничья.";
+        }
+        else {
+            this.text += (result == 0) ? "Победа игрока 1" : "Победа игрока 2";
+        }
     }
 
     put(unite, x, y) {

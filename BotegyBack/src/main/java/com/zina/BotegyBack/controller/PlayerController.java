@@ -19,23 +19,28 @@ public class PlayerController {
     }
 
     @PutMapping(value = "/updateNick")
-    public ResponseEntity<Player> updatePlayerName(@RequestParam UUID userId, @RequestParam String nick){
-        return ResponseEntity.ok(playerService.updateNick(userId, nick));
+    public ResponseEntity<Player> updatePlayerName(@RequestParam String userId, @RequestParam String nick){
+        return ResponseEntity.ok(playerService.updateNick(UUID.fromString(userId), nick));
+    }
+
+    @PutMapping(value = "/ban")
+    public void banUser(@RequestParam String userId){
+        playerService.ban(UUID.fromString(userId));
     }
 
     @PutMapping(value = "/updatePass")
-    public void updatePlayerPass(@RequestParam UUID userId, @RequestParam String pass){
-        playerService.updatePass(userId, pass);
+    public void updatePlayerPass(@RequestParam String userId, @RequestParam String pass){
+        playerService.updatePass(UUID.fromString(userId), pass);
     }
 
     @PutMapping(value = "/doModer")
-    public ResponseEntity<Player> doPlayerModer(@RequestParam UUID userId){
-        return ResponseEntity.ok(playerService.doModer(userId));
+    public ResponseEntity<Player> doPlayerModer(@RequestParam String userId){
+        return ResponseEntity.ok(playerService.doModer(UUID.fromString(userId)));
     }
 
-    @PutMapping(value = "/UnDoModer")
-    public ResponseEntity<Player> UnDoPlayerModer(@RequestParam UUID userId){
-        return ResponseEntity.ok(playerService.unDoModer(userId));
+    @PutMapping(value = "/unDoModer")
+    public ResponseEntity<Player> UnDoPlayerModer(@RequestParam String userId){
+        return ResponseEntity.ok(playerService.unDoModer(UUID.fromString(userId)));
     }
 
 

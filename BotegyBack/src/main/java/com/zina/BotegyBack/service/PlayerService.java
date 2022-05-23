@@ -58,4 +58,8 @@ public class PlayerService {
         playerRepository.save(p);
         return p;
     }
+
+    public void ban(UUID playerId){
+        playerRepository.delete(playerRepository.getById(playerId));
+    }
 }

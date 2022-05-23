@@ -27,10 +27,18 @@ public class MatchService {
         this.botRepository = botRepository;
         this.botService = botService;
         this.defaultScript = createEnvironment();
+        this.runtime.executeVoidScript(this.defaultScript);
+    }
+
+    public String getMatchHistory(UUID matchId){
+        Match m = matchRepository.getById(matchId);
+        V8Array parameters = new V8Array(runtime);
+        parameters.push(botService.getCodeForBot(m.getBot1()));
+        parameters.push(botService.getCodeForBot(m.getBot2()));
+        return runtime.executeStringFunction("get_match_log", parameters);
     }
 
     public Match playMatch(UUID bot1Id, UUID bot2Id){
-        runtime.executeVoidScript(this.defaultScript);
         V8Array parameters = new V8Array(runtime);
         Bot bot1 = botRepository.getById(bot1Id);
         Bot bot2 = botRepository.getById(bot2Id);

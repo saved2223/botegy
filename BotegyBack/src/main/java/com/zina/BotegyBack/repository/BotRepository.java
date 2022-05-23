@@ -14,4 +14,7 @@ public interface BotRepository extends JpaRepository<Bot, UUID> {
 
     List<Bot> findByPlayer_Id(UUID id);
 
+    List<Bot> findByName(String name);
+
+
 }

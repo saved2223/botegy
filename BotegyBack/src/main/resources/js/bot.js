@@ -1,7 +1,7 @@
 class Bot {
     constructor() {
         this.energy = 10;
-        this.hp = 3;
+        this.hp = 30;
     }
 }
 
