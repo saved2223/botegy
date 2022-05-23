@@ -2,6 +2,7 @@ package com.zina.BotegyBack.service;
 
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Array;
+import com.zina.BotegyBack.container.BotMatchWrapper;
 import com.zina.BotegyBack.entity.Bot;
 import com.zina.BotegyBack.entity.Match;
 import com.zina.BotegyBack.repository.BotRepository;
@@ -28,6 +29,10 @@ public class MatchService {
         this.botService = botService;
         this.defaultScript = createEnvironment();
         this.runtime.executeVoidScript(this.defaultScript);
+    }
+
+    public BotMatchWrapper getBotAndMatches(UUID botId){
+        return new BotMatchWrapper(botRepository.getById(botId), getMatchesByBotId(botId));
     }
 
     public String getMatchHistory(UUID matchId){

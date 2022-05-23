@@ -4,6 +4,7 @@ import com.zina.BotegyBack.container.BotCodeWrapper;
 import com.zina.BotegyBack.container.BotMatchWrapper;
 import com.zina.BotegyBack.entity.Bot;
 import com.zina.BotegyBack.service.BotService;
+import com.zina.BotegyBack.service.MatchService;
 import com.zina.BotegyBack.service.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,10 @@ import java.util.UUID;
 @RestController
 public class BotController {
     private final BotService botService;
-    public BotController(BotService botService){
+    private final MatchService matchService;
+    public BotController(BotService botService, MatchService matchService){
         this.botService = botService;
+        this.matchService = matchService;
     }
     @GetMapping(value = "/getBot")
     public ResponseEntity<BotCodeWrapper> getBot(@RequestParam String botId){
@@ -45,7 +48,7 @@ public class BotController {
 
     @GetMapping(value = "/getMatchesForBot")
     public ResponseEntity<BotMatchWrapper> getMatchesForBots(@RequestParam String botId){
-        return ResponseEntity.ok(botService.getBotAndMatches(UUID.fromString(botId)));
+        return ResponseEntity.ok(matchService.getBotAndMatches(UUID.fromString(botId)));
     }
 
     @DeleteMapping(value = "/deleteBot")

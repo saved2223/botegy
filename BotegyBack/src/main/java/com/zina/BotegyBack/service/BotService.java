@@ -18,12 +18,10 @@ import java.util.UUID;
 public class BotService {
     private final BotRepository botRepository;
     private final ResourceLoader resourceLoader;
-    private final MatchService matchService;
     private final PlayerService playerService;
-    public BotService(BotRepository botRepository, MatchService matchService, ResourceLoader resourceLoader, PlayerService playerService){
+    public BotService(BotRepository botRepository, ResourceLoader resourceLoader, PlayerService playerService){
         this.resourceLoader = resourceLoader;
         this.botRepository = botRepository;
-        this.matchService = matchService;
         this.playerService = playerService;
     }
 
@@ -83,9 +81,7 @@ public class BotService {
        return botRepository.findByPlayer_Id(id);
     }
 
-    public BotMatchWrapper getBotAndMatches(UUID botId){
-        return new BotMatchWrapper(botRepository.getById(botId), matchService.getMatchesByBotId(botId));
-    }
+
 
     private void deleteCode(String name){
         Resource resource = resourceLoader.getResource("classpath:bots/"+ name + ".js");
