@@ -1,25 +1,31 @@
-﻿using Model;
+﻿using System;
+using System.Collections.Generic;
 
-public class VariableBlock : IExpression
+namespace Model
 {
-    private string _name = "new_var";
-
-    public VariableBlock(string name)
+    [Serializable]
+    public class VariableBlock : IExpression
     {
-        _name = name;
+        private string _name = "new_var";
 
-    }
-    
-    public VariableBlock() {}
+        public VariableBlock(string name)
+        {
+            _name = name;
+        }
 
-    public string toString()
-    {
-        return _name;
-    }
+        public VariableBlock()
+        {
+        }
 
-    public string Name
-    {
-        get => _name;
-        set => _name = value;
+        public string GetString(Dictionary<string, VariableBlock> b)
+        {
+            return _name;
+        }
+
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
     }
 }

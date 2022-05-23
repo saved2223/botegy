@@ -1,3 +1,6 @@
-﻿public interface IExpression : ICode
+﻿namespace Model
 {
+    public interface IExpression : ICode
+    {
+    }
 }

@@ -1,0 +1,34 @@
+﻿{
+  "program": {
+    "statements": [
+      {
+        "class": "ConditionBlock",
+        "_conditions": [
+          {"class": "VariableBlock", "_name": "str1"},
+          {"class": "ValueBlock", "_value": "2", "_type": "INT"}
+        ],
+        
+        "_scopes":[
+          {"class": "AssignBlock", 
+            "_variableBlock": {
+              "class": "VariableBlock", "_name": "str1"
+            }, 
+            "_expressionBlock":  {
+              "class": "ValueBlock", "_value": "2", "_type": "INT"
+            }
+          },
+          {}
+        ],
+        "_elseScope" : [
+          {"class": "AssignBlock",
+            "_variableBlock": {
+              "class": "VariableBlock", "_name": "str1"
+            },
+            "_expressionBlock":  {
+              "class": "ValueBlock", "_value": "2", "_type": "INT"
+            }}
+        ]
+      }
+    ]
+  }
+}

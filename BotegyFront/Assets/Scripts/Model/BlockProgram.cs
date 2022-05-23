@@ -1,60 +1,67 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
-public class BlockProgram
+namespace Model
 {
-    private List<ICode> blocks;
-
-    public BlockProgram(List<ICode> blocks)
+    public class BlockProgram
     {
-        this.blocks = blocks;
-    }
+        private List<ICode> blocks;
 
-    public BlockProgram()
-    {
-        blocks = new List<ICode>();
-    }
-
-    public BlockProgram(string program)
-    {
-        blocks = new List<ICode>();
-    }
-
-    public string toString()
-    {
-        string str = "";
-
-        foreach (var c in blocks)
+        public BlockProgram(List<ICode> blocks)
         {
-            str += c.toString() + "\n";
+            this.blocks = blocks;
         }
-        
-        return str;
-    }
 
-    public void AddBlock(ICode codeBlock)
-    {
-        blocks.Add(codeBlock);
-    }
+        public BlockProgram()
+        {
+            blocks = new List<ICode>();
+        }
 
-    public ICode GetByIndex(int index)
-    {
-        return blocks[index];
-    }
+        public BlockProgram(string program)
+        {
+            blocks = new List<ICode>();
+        }
 
-    public void DeleteByIndex(int index)
-    {
-        blocks.RemoveAt(index);
-    }
+        public string GetString()
+        {
+            Dictionary<string, VariableBlock> variables = new Dictionary<string, VariableBlock>();
 
-    public List<ICode> GetBlocks()
-    {
-        return blocks;
-    }
+            string str = "";
 
-    public void SetBlocks(List<ICode> blocks)
-    {
-        this.blocks = blocks;
+            foreach (var c in blocks)
+            {
+                str += c.GetString(variables);
+                if (c.GetType() == typeof(FunctionBlock))
+                    str += ";";
+
+                str += "\n";
+            }
+
+            return str;
+        }
+
+        public void AddBlock(ICode codeBlock)
+        {
+            blocks.Add(codeBlock);
+        }
+
+        public ICode GetByIndex(int index)
+        {
+            return blocks[index];
+        }
+
+        public void DeleteByIndex(int index)
+        {
+            blocks.RemoveAt(index);
+        }
+
+        public List<ICode> GetBlocks()
+        {
+            return blocks;
+        }
+
+        public void SetBlocks(List<ICode> blocks)
+        {
+            this.blocks = blocks;
+        }
     }
-    
 }

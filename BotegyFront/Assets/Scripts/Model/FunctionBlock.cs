@@ -1,83 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 
-public class FunctionBlock : IStatement, IExpression
+namespace Model
 {
-    public enum Functions
+    public class FunctionBlock : IStatement, IExpression
     {
-        [ArgumentsNum(3)]
-        PUT,
-        [ArgumentsNum(2)]
-        GET_UNITE,
-        [ArgumentsNum(2)]
-        GET_UNITE_HP,
-        [ArgumentsNum(0)]
-        GET_OPPONENT_HP,
-        [ArgumentsNum(0)]
-        GET_SELF_HP,
-        [ArgumentsNum(2)]
-        IS_EMPTY,
-        [ArgumentsNum(0)]
-        GET_STEP_NUMBER
-    }
-
-    
-    [AttributeUsage(AttributeTargets.Field)]
-    public class ArgumentsNumAttribute : Attribute
-    {
-        public int ArgumentsNumValue
+        public FunctionBlock()
         {
-            get; 
-            private set;
         }
 
-        public ArgumentsNumAttribute(int argumentsNumValue)
+        public FunctionBlock(Functions function)
         {
-            ArgumentsNumValue = argumentsNumValue;
-        }
-    }
-
-    public FunctionBlock() {}
-    
-    public FunctionBlock(Functions function)
-    {
-        this.function = function;
-    }
-
-    private Functions function = Functions.GET_SELF_HP;
-    private List<IExpression> arguments = new List<IExpression>();
-
-    public Functions Function
-    {
-        get => function;
-        set => function = value;
-    }
-
-    public List<IExpression> Arguments
-    {
-        get => arguments;
-        set => arguments = value;
-    }
-
-    public void AddArgument(IExpression arg)
-    {
-        arguments.Add(arg);
-    }
-
-    public string toString()
-    {
-        string str = "";
-        foreach (var arg in arguments)
-        {
-            str += arg == null ? "" : arg.toString() + ", ";
+            this.function = function;
         }
 
-        return function.ToString().ToLower() + "(" + (str.Length > 0 ? str.Substring(0, str.Length - 2): "" )+ ")";
-    }
+        private Functions function = Functions.GET_SELF_HP;
+        private List<IExpression> arguments = new List<IExpression>();
 
-    public string insertTabs(string str)
-    {
-        return str;
+        public Functions Function
+        {
+            get => function;
+            set => function = value;
+        }
+
+        public List<IExpression> Arguments
+        {
+            get => arguments;
+            set => arguments = value;
+        }
+
+        public void AddArgument(IExpression arg)
+        {
+            arguments.Add(arg);
+        }
+
+        public string GetString(Dictionary<string, VariableBlock> b)
+        {
+            string str = "";
+            foreach (var arg in arguments)
+            {
+                str += arg == null ? "" : arg.GetString(b) + ", ";
+            }
+
+            return "this.field." + function.ToString().ToLower() + "(" +
+                   (str.Length > 0 ? str.Substring(0, str.Length - 2) : "") + ")";
+        }
     }
 }

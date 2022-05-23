@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 5709614169800785523}
   - component: {fileID: 8695537685152510615}
   - component: {fileID: 5201554426036344297}
+  - component: {fileID: 3921050909399529184}
   m_Layer: 5
   m_Name: ValBlock
   m_TagString: Untagged
@@ -214,6 +215,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d15f5fe216344e2e9d3cd35c7b506287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3921050909399529184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5530028734208111033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f709b2a3f9d4043a522cfef4fe91e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6566228668856640891
