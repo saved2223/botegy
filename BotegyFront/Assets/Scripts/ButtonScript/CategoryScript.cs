@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public class CategoryScript : MonoBehaviour
+namespace ButtonScript
 {
-    private string _category;
-
-    public string Category
+    public class CategoryScript : MonoBehaviour
     {
-        get => _category;
-        set => _category = value;
-    }
+        private string _category;
 
+        public string Category
+        {
+            get => _category;
+            set => _category = value;
+        }
+
+    }
 }

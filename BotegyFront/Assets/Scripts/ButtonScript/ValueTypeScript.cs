@@ -1,13 +1,10 @@
 using Model;
 using UnityEngine;
 
-public class ValueTypeScript : MonoBehaviour
+namespace ButtonScript
 {
-    private ValueType _type;
-
-    public ValueType ValueType
+    public class ValueTypeScript : MonoBehaviour
     {
-        get => _type;
-        set => _type = value;
+        public ValueType ValueType { get; set; }
     }
 }

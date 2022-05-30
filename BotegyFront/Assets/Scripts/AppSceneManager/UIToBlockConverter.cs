@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using ButtonScript;
 using Model;
 using UnityEngine;
 using UnityEngine.UI;
+using ValueType = Model.ValueType;
 
 namespace AppSceneManager
 {
@@ -59,7 +61,8 @@ namespace AppSceneManager
             AssignBlock stmt = new AssignBlock();
 
             stmt.VariableBlock = ConvertVariable(block.Find("Image/Variable/VarBlock"));
-            stmt.ExpressionBlock = ConvertExpression(block.Find("Image/ExprContainerBlock"));
+
+            stmt.ExpressionBlock = block.Find("Image/ExprContainerBlock").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(block.Find("Image/ExprContainerBlock"));
 
             return stmt;
         }
@@ -74,7 +77,8 @@ namespace AppSceneManager
                 {
                     if (child.name == "Option")
                     {
-                        IExpression ifExpr = ConvertExpression(child.Find("Condition/ExprContainerBlock"));
+                        IExpression ifExpr;
+                        ifExpr = child.Find("Condition/ExprContainerBlock").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(child.Find("Condition/ExprContainerBlock"));
                         List<ICode> ifScope = ConvertStmtContainer(child.Find("Scope/StatementContainerBlock"));
 
                         c.Condition = ifExpr;
@@ -96,7 +100,8 @@ namespace AppSceneManager
         {
             LoopBlock c = new LoopBlock();
 
-            c.Cond = ConvertExpression(block.Find("Image/Condition/ExprContainerBlock"));
+            c.Cond = block.Find("Image/Condition/ExprContainerBlock").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(block.Find("Image/Condition/ExprContainerBlock"));
+
             c.Code = ConvertStmtContainer(block.Find("Image/Scope/StatementContainerBlock"));
 
             return c;
@@ -113,7 +118,9 @@ namespace AppSceneManager
             {
                 if (child.gameObject.activeSelf && child.name.Contains("Block"))
                 {
-                    f.AddArgument(ConvertExpression(child));
+                    f.AddArgument(child.childCount == 0
+                        ? new ValueBlock("0", ValueType.INT)
+                        : ConvertExpression(child));
                 }
             }
 
@@ -153,8 +160,9 @@ namespace AppSceneManager
             bin.Operator =
                 BinaryOperatorExtensions.GetValueFromDescription(block.Find("Image/Text").GetComponent<Text>().text);
 
-            bin.Expr1 = ConvertExpression(block.Find("Image/ExprContainerBlock1"));
-            bin.Expr2 = ConvertExpression(block.Find("Image/ExprContainerBlock2"));
+
+            bin.Expr1 = block.Find("Image/ExprContainerBlock1").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(block.Find("Image/ExprContainerBlock1"));
+            bin.Expr2 = block.Find("Image/ExprContainerBlock2").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(block.Find("Image/ExprContainerBlock2"));
 
             return bin;
         }
@@ -163,7 +171,7 @@ namespace AppSceneManager
         {
             BracesBlock br = new BracesBlock();
 
-            br.ExpressionBlock = ConvertExpression(block.Find("Image/ExprContainerBlock"));
+            br.ExpressionBlock = block.Find("Image/ExprContainerBlock").childCount == 0 ? new ValueBlock("0", ValueType.INT) : ConvertExpression(block.Find("Image/ExprContainerBlock"));
 
             return br;
         }

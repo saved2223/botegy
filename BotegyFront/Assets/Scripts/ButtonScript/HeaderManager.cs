@@ -1,31 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using AppSceneManager;
+using Dialog;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeaderManager : MonoBehaviour
+namespace ButtonScript
 {
-    [SerializeField] private TextInputWindow inputTextDialog;
-    [SerializeField] private Text header;
+    public class HeaderManager : MonoBehaviour
+    {
+        [SerializeField] private TextInputWindow inputTextDialog;
+        [SerializeField] public Text header;
     
-    private void Awake()
-    {
-        //set bot name came from server
-
-        header.text = "BOT1";
-    }
-
-    public void ChangeBotName()
-    {
-        ShowTextInputWindow("ВВЕДИТЕ НАЗВАНИЕ БОТА");
-    }
-    
-    private void ShowTextInputWindow(string title)
-    {
-        inputTextDialog.Show(title, header.text, () => { }, (s) =>
+        private void Awake()
         {
-            if (s.Length > 0)
-                header.text = s;
-        });
-    }    
+            header.text = SceneInfo.EditedBot.name != null ? SceneInfo.EditedBot.name : "New_bot";
+        }
+
+        public void ChangeBotName()
+        {
+            ShowTextInputWindow("ВВЕДИТЕ НАЗВАНИЕ БОТА");
+        }
+    
+        private void ShowTextInputWindow(string title)
+        {
+            inputTextDialog.Show(title, header.text, () => { }, (s) =>
+            {
+                if (s.Length > 0)
+                    header.text = s;
+            });
+        }    
+    }
 }

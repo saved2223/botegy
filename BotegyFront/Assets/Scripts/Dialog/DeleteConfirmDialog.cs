@@ -1,42 +1,45 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DeleteConfirmDialog : MonoBehaviour
+namespace Dialog
 {
-    private Button cancelButton;
-    private Button okButton;
-
-    private void Awake()
+    public class DeleteConfirmDialog : MonoBehaviour
     {
-        cancelButton = transform.Find("Buttons/CancelButton").GetComponent<Button>();
-        okButton = transform.Find("Buttons/OKButton").GetComponent<Button>();
+        private Button _cancelButton;
+        private Button _okButton;
 
-        Hide();
-    }
+        private void Awake()
+        {
+            _cancelButton = transform.Find("Buttons/CancelButton").GetComponent<Button>();
+            _okButton = transform.Find("Buttons/OKButton").GetComponent<Button>();
 
-    private void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+            Hide();
+        }
 
-    public void Show(Action onCancel, Action onOk)
-    {
-        okButton.onClick.RemoveAllListeners();
-        cancelButton.onClick.RemoveAllListeners();
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Show(Action onCancel, Action onOk)
+        {
+            _okButton.onClick.RemoveAllListeners();
+            _cancelButton.onClick.RemoveAllListeners();
         
-        okButton.onClick.AddListener(() =>
-        {
-            Hide();
-            onOk();
-        });
-        cancelButton.onClick.AddListener(() =>
-        {
-            Hide();
-            onCancel();
-        });
+            gameObject.SetActive(true);
+        
+            _okButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onOk();
+            });
+            _cancelButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onCancel();
+            });
 
+        }
     }
 }

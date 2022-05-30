@@ -2,41 +2,44 @@ using AppSceneManager;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlockButtonHandler : MonoBehaviour
+namespace ButtonScript
 {
-    private string category;
-    private string targetClass;
-    private Button _button;
-    private CodePanelManager _manager;
-
-
-    public string Category
+    public class BlockButtonHandler : MonoBehaviour
     {
-        get => category;
-        set => category = value;
-    }
+        private string _category;
+        private string _targetClass;
+        private Button _button;
+        private BotEditorSceneManager _manager;
 
-    public string TargetClass
-    {
-        get => targetClass;
-        set => targetClass = value;
-    }
 
-    public CodePanelManager Manager
-    {
-        get => _manager;
-        set => _manager = value;
-    }
+        public string Category
+        {
+            get => _category;
+            set => _category = value;
+        }
 
-    private void Awake()
-    {
-        _button = GetComponentInChildren<Button>();
-        _button.onClick.AddListener(ButtonClicked);
-    }
+        public string TargetClass
+        {
+            get => _targetClass;
+            set => _targetClass = value;
+        }
 
-    private void ButtonClicked()
-    {
-        _manager.AddBlock(category, targetClass);
+        public BotEditorSceneManager Manager
+        {
+            get => _manager;
+            set => _manager = value;
+        }
+
+        private void Awake()
+        {
+            _button = GetComponentInChildren<Button>();
+            _button.onClick.AddListener(ButtonClicked);
+        }
+
+        private void ButtonClicked()
+        {
+            _manager.AddBlock(_category, _targetClass);
        
+        }
     }
 }

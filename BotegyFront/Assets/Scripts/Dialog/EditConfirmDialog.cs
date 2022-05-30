@@ -1,52 +1,55 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EditConfirmDialog : MonoBehaviour
+namespace Dialog
 {
-    private Button cancelButton;
-    private Button changeButton;
-    private Button duplicateButton;
-
-    private void Awake()
+    public class EditConfirmDialog : MonoBehaviour
     {
-        cancelButton = transform.Find("Buttons/Image/CancelButton").GetComponent<Button>();
-        changeButton = transform.Find("Buttons/Image/ChangeButton").GetComponent<Button>();
-        duplicateButton = transform.Find("Buttons/Image/DuplicateButton").GetComponent<Button>();
-        
-        Hide();
-    }
+        private Button _cancelButton;
+        private Button _changeButton;
+        private Button _duplicateButton;
 
-    private void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+        private void Awake()
+        {
+            _cancelButton = transform.Find("Buttons/Image/CancelButton").GetComponent<Button>();
+            _changeButton = transform.Find("Buttons/Image/ChangeButton").GetComponent<Button>();
+            _duplicateButton = transform.Find("Buttons/Image/DuplicateButton").GetComponent<Button>();
+        
+            Hide();
+        }
 
-    public void Show(Action onCancel, Action onChange, Action onDuplicate)
-    {
-        cancelButton.onClick.RemoveAllListeners();
-        changeButton.onClick.RemoveAllListeners();
-        duplicateButton.onClick.RemoveAllListeners();
-        
-        cancelButton.onClick.AddListener(() =>
+        private void Hide()
         {
-            Hide();
-            onCancel();
-        });
-        
-        changeButton.onClick.AddListener(() =>
-        {
-            Hide();
-            onChange();
-        });
-        
-        duplicateButton.onClick.AddListener(() =>
-        {
-            Hide();
-            onDuplicate();
-        });
+            gameObject.SetActive(false);
+        }
 
+        public void Show(Action onCancel, Action onChange, Action onDuplicate)
+        {
+            _cancelButton.onClick.RemoveAllListeners();
+            _changeButton.onClick.RemoveAllListeners();
+            _duplicateButton.onClick.RemoveAllListeners();
+        
+            gameObject.SetActive(true);
+        
+            _cancelButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onCancel();
+            });
+        
+            _changeButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onChange();
+            });
+        
+            _duplicateButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onDuplicate();
+            });
+
+        }
     }
 }

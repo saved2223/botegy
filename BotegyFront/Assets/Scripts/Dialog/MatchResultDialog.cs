@@ -1,45 +1,46 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MatchResultDialog : MonoBehaviour
+namespace Dialog
 {
-    private Button showMatchButton;
-    private Button closeButton;
+    public class MatchResultDialog : MonoBehaviour
+    {
+        private Button _showMatchButton;
+        private Button _closeButton;
     
-    private void Awake()
-    {
-        showMatchButton = transform.Find("Buttons/Image/PlayBackButton").GetComponent<Button>();
-        closeButton = transform.Find("Buttons/Image/CloseButton").GetComponent<Button>();
-
-        Hide();
-    }
-
-    private void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void Show(string text, Action onCancel, Action onOk)
-    {
-        transform.Find("Text").GetComponent<Text>().text = text;
-        gameObject.SetActive(true);
-        
-        showMatchButton.onClick.RemoveAllListeners();
-        closeButton.onClick.RemoveAllListeners();
-        
-        showMatchButton.onClick.AddListener(() =>
+        private void Awake()
         {
-            Hide();
-            onOk();
-        });
-        closeButton.onClick.AddListener(() =>
-        {
-            Hide();
-            onCancel();
-        });
+            _showMatchButton = transform.Find("Buttons/Image/PlayBackButton").GetComponent<Button>();
+            _closeButton = transform.Find("Buttons/Image/CloseButton").GetComponent<Button>();
 
+            Hide();
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void Show(string text, Action onCancel, Action onOk)
+        {
+            transform.Find("Text").GetComponent<Text>().text = text;
+            gameObject.SetActive(true);
+        
+            _showMatchButton.onClick.RemoveAllListeners();
+            _closeButton.onClick.RemoveAllListeners();
+        
+            _showMatchButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onOk();
+            });
+            _closeButton.onClick.AddListener(() =>
+            {
+                Hide();
+                onCancel();
+            });
+
+        }
     }
 }

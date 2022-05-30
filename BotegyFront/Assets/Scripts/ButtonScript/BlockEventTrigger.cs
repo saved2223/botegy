@@ -2,19 +2,22 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BlockEventTrigger : EventTrigger
+namespace ButtonScript
 {
-    [SerializeField] private CodePanelManager _manager;
-
-    public override void OnPointerClick(PointerEventData eventData)
-    {   
-        _manager.SetSelectedObject(eventData.pointerClick);
-    }
-
-    public CodePanelManager Manager
+    public class BlockEventTrigger : EventTrigger
     {
-        get => _manager;
-        set => _manager = value;
+        [SerializeField] private BotEditorSceneManager _manager;
+
+        public override void OnPointerClick(PointerEventData eventData)
+        {   
+            _manager.SetSelectedObject(eventData.pointerClick);
+        }
+
+        public BotEditorSceneManager Manager
+        {
+            get => _manager;
+            set => _manager = value;
+        }
     }
 }
     

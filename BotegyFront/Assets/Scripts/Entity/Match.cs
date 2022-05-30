@@ -1,10 +1,13 @@
 ﻿using System;
 
-[Serializable]
-public class Match
+namespace Entity
 {
-    public string id;
-    public string bot1;
-    public string bot2;
-    public string winnerBot;
+    [Serializable]
+    public class Match
+    {
+        public string id;
+        public Bot bot1;
+        public Bot bot2;
+        public Bot winnerBot;
+    }
 }

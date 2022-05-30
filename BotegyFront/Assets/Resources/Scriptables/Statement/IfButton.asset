@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d86c2d9ef63fa4d9165b1cbc41f24a, type: 3}
   m_Name: IfButton
   m_EditorClassIdentifier: 
-  text: 'if <cond> : <scope>\n(elif <cond> :  <scope>\nelse: <cond>)'
+  text: 'if <cond> : <scope> \nelse <scope>'
   tClass: ConditionBlock
   category: Statement

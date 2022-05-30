@@ -9,7 +9,6 @@ namespace Model
         [Description("-")] SUB,
         [Description("*")] MUL,
         [Description("/")] DIV,
-        [Description("%")] MOD,
         [Description("==")] EQ,
         [Description("!=")] NEQ,
         [Description(">")] GR,

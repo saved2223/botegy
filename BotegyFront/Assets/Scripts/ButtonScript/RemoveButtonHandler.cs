@@ -1,14 +1,15 @@
-﻿using System;
-using AppSceneManager;
+﻿using AppSceneManager;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class RemoveButtonHandler : MonoBehaviour
+namespace ButtonScript
 {
-    public CodePanelManager _manager;
-
-    public void ButtonClicked()
+    public class RemoveButtonHandler : MonoBehaviour
     {
-        _manager.DeleteBlock();
+        public BotEditorSceneManager _manager;
+
+        public void ButtonClicked()
+        {
+            _manager.DeleteBlock();
+        }
     }
 }

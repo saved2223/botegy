@@ -408,11 +408,6 @@ namespace YMMJSONUtils
 
             return o1.ULongValue == o2.ULongValue;
         }
-
-        public static JObject Parse(string json)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class JSONEncoder

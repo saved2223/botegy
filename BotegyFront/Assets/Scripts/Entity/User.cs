@@ -1,18 +1,22 @@
 ﻿using System;
 
-[Serializable]
-public class User
+namespace Entity
 {
-    public string id;
-    public string nickname;
-    public string email;
-    public int isModer;
-    
-    private bool loggedIn = false;
-    
-    public bool LoggedIn
+    [Serializable]
+    public class User
     {
-        get => loggedIn;
-        set => loggedIn = value;
+        public string id;
+        public string nickname;
+        public string email;
+        public int isModer;
+        public int isGoogle;
+    
+        private bool loggedIn = false;
+    
+        public bool LoggedIn
+        {
+            get => loggedIn;
+            set => loggedIn = value;
+        }
     }
 }

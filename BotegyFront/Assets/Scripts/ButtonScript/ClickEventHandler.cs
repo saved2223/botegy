@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using AppSceneManager;
 using UnityEngine;
 
-public class ClickEventHandler : MonoBehaviour
+namespace ButtonScript
 {
-    [SerializeField] private CodePanelManager _manager;
-    
-    public void OnClick()
+    public class ClickEventHandler : MonoBehaviour
     {
-        _manager.SetSelectedObject(null);
+        [SerializeField] private BotEditorSceneManager _manager;
+    
+        public void OnClick()
+        {
+            _manager.SetSelectedObject(null);
+        }
     }
 }

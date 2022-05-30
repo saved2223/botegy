@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using AppSceneManager;
 using UnityEngine;
 
-public class EditButtonHandler : MonoBehaviour
+namespace ButtonScript
 {
-   public CodePanelManager _manager;
-   
-   public void ButtonClicked()
+   public class EditButtonHandler : MonoBehaviour
    {
-      _manager.EditBlock();
+      public BotEditorSceneManager _manager;
+   
+      public void ButtonClicked()
+      {
+         _manager.EditBlock();
+      }
    }
 }
