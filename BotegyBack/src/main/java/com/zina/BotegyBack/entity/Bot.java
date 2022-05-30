@@ -1,6 +1,6 @@
 package com.zina.BotegyBack.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,19 +11,29 @@ import java.util.UUID;
 @Table(name = "bot")
 public class Bot {
 
+    public Bot() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @Getter
     @Setter
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Getter
+    @Setter
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String code;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private Player player;
 
     public Player getPlayer() {

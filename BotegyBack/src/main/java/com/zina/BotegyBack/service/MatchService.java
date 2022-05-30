@@ -2,7 +2,9 @@ package com.zina.BotegyBack.service;
 
 import com.eclipsesource.v8.V8;
 import com.eclipsesource.v8.V8Array;
+import com.eclipsesource.v8.V8ScriptExecutionException;
 import com.zina.BotegyBack.container.BotMatchWrapper;
+import com.zina.BotegyBack.container.History;
 import com.zina.BotegyBack.entity.Bot;
 import com.zina.BotegyBack.entity.Match;
 import com.zina.BotegyBack.repository.BotRepository;
@@ -18,50 +20,72 @@ import java.util.UUID;
 public class MatchService {
     private final MatchRepository matchRepository;
     private final BotRepository botRepository;
-    private final BotService botService;
 
-    private final String defaultScript;
-    private final V8 runtime = V8.createV8Runtime();
 
-    public MatchService(MatchRepository matchRepository, BotRepository botRepository, BotService botService){
+    public MatchService(MatchRepository matchRepository, BotRepository botRepository) {
         this.matchRepository = matchRepository;
         this.botRepository = botRepository;
-        this.botService = botService;
-        this.defaultScript = createEnvironment();
-        this.runtime.executeVoidScript(this.defaultScript);
     }
 
-    public BotMatchWrapper getBotAndMatches(UUID botId){
-        return new BotMatchWrapper(botRepository.getById(botId), getMatchesByBotId(botId));
+    public BotMatchWrapper getBotAndMatches(UUID botId) {
+        BotMatchWrapper bmw = new BotMatchWrapper();
+        bmw.setMatches(getMatchesByBotId(botId));
+        bmw.setBot(botRepository.findById(botId).get());
+        return bmw;
     }
 
-    public String getMatchHistory(UUID matchId){
+    public History getMatchHistory(UUID matchId) {
+        V8 runtime = V8.createV8Runtime();
+        String defaultScript = createEnvironment();
+        runtime.executeVoidScript(defaultScript);
         Match m = matchRepository.getById(matchId);
         V8Array parameters = new V8Array(runtime);
-        parameters.push(botService.getCodeForBot(m.getBot1()));
-        parameters.push(botService.getCodeForBot(m.getBot2()));
-        return runtime.executeStringFunction("get_match_log", parameters);
+        parameters.push(m.getBot1().getCode());
+        parameters.push(m.getBot2().getCode());
+
+        InputStream s = new ByteArrayInputStream((runtime.executeStringFunction("get_match_log", parameters)).getBytes(StandardCharsets.UTF_8));
+        String res = "";
+        try {
+            res = new String(s.readAllBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        History history = new History();
+        history.setHistory(res);
+        return history;
     }
 
-    public Match playMatch(UUID bot1Id, UUID bot2Id){
+    public Match playMatch(UUID bot1Id, UUID bot2Id) {
+        V8 runtime = V8.createV8Runtime();
+        String defaultScript = createEnvironment();
+        runtime.executeVoidScript(defaultScript);
         V8Array parameters = new V8Array(runtime);
-        Bot bot1 = botRepository.getById(bot1Id);
-        Bot bot2 = botRepository.getById(bot2Id);
+        Bot bot1 = botRepository.findById(bot1Id).get();
+        Bot bot2 = botRepository.findById(bot2Id).get();
         Match match = new Match();
         match.setBot1(bot1);
         match.setBot2(bot2);
-        parameters.push(botService.getCodeForBot(bot1));
-        parameters.push(botService.getCodeForBot(bot2));
-        int func = runtime.executeIntegerFunction("get_match_results", parameters);
-        switch (func) {
-            case 0 -> match.setWinnerBot(bot1);
-            case 1 -> match.setWinnerBot(bot2);
+        parameters.push(match.getBot1().getCode());
+        parameters.push(match.getBot2().getCode());
+        int func = -1;
+        try {
+            func = runtime.executeIntegerFunction("get_match_results", parameters);
+        } catch (V8ScriptExecutionException e) {
+            e.printStackTrace();
         }
-        matchRepository.save(match);
-        return match;
+
+        if (func != -1) {
+            switch (func) {
+                case 0 -> match.setWinnerBot(bot1);
+                case 1 -> match.setWinnerBot(bot2);
+            }
+            matchRepository.save(match);
+            return match;
+        } else return null;
+
     }
 
-    public List<Match> getMatchesByBotId(UUID botId){
+    public List<Match> getMatchesByBotId(UUID botId) {
         return matchRepository.findByBot1_IdIsOrBot2_IdIs(botId, botId);
     }
 
@@ -77,7 +101,7 @@ public class MatchService {
         filename = "js/" + filename;
         InputStream is = this.getClass().getClassLoader().getResourceAsStream(filename);
         StringBuilder sb = new StringBuilder();
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);

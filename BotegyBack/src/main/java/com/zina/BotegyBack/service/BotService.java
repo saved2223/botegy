@@ -1,103 +1,83 @@
 package com.zina.BotegyBack.service;
 
-import com.zina.BotegyBack.container.BotCodeWrapper;
-import com.zina.BotegyBack.container.BotMatchWrapper;
 import com.zina.BotegyBack.entity.Bot;
 import com.zina.BotegyBack.repository.BotRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+import com.zina.BotegyBack.repository.MatchRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class BotService {
     private final BotRepository botRepository;
-    private final ResourceLoader resourceLoader;
     private final PlayerService playerService;
-    public BotService(BotRepository botRepository, ResourceLoader resourceLoader, PlayerService playerService){
-        this.resourceLoader = resourceLoader;
+    private final MatchRepository matchRepository;
+
+    public BotService(BotRepository botRepository, PlayerService playerService, MatchRepository matchRepository) {
         this.botRepository = botRepository;
         this.playerService = playerService;
+        this.matchRepository = matchRepository;
     }
 
-    public String getCodeForBot(Bot bot){
-        String code = "";
-        Resource resource = resourceLoader.getResource("classpath:bots/"+bot.getId() + ".js");
-        try {
-            InputStream inputStream = resource.getInputStream();
-            code = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return code;
-    }
 
-    public void addBot(String name, UUID userId, String code){
+    public void addBot(String name, UUID userId, String code) {
         Bot bot = new Bot();
         bot.setName(name);
         bot.setPlayer(playerService.getPlayer(userId));
-        createCodeFile(bot.getId().toString(), code);
+        bot.setCode(code);
         botRepository.save(bot);
+
+
     }
 
-    private void createCodeFile(String name, String code){
-        try {
-            File file = new File(resourceLoader.getResource("classpath:js/").getFile() + name + ".js");
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(code);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public Bot updateBot(UUID id, String name, String code){
-        Bot b = botRepository.getById(id);
+    public Bot updateBot(UUID id, String name, String code) {
+        delMatches(id);
+        Bot b = botRepository.findById(id).get();
         b.setName(name);
-        deleteCode(id.toString());
-        createCodeFile(id.toString(), code);
+        b.setCode(code);
         botRepository.save(b);
         return b;
     }
 
-    public BotCodeWrapper getBot(UUID botId){
-        BotCodeWrapper bcw = new BotCodeWrapper();
-        Bot bot = botRepository.getById(botId);
-        bcw.setBot(bot);
-        bcw.setCode(getCodeForBot(bot));
-        return bcw;
+    public Bot getBot(UUID botId) {
+        return botRepository.findById(botId).get();
     }
 
-    public List<Bot> getBotsByName(String botName){
+    public List<Bot> getBotsByName(String botName) {
         return botRepository.findByName(botName);
     }
 
-    public List<Bot> getBotsForPlayer(UUID id){
-       return botRepository.findByPlayer_Id(id);
+    public List<Bot> getBotsForPlayer(UUID id) {
+        return botRepository.findByPlayer_Id(id);
     }
 
 
-
-    private void deleteCode(String name){
-        Resource resource = resourceLoader.getResource("classpath:bots/"+ name + ".js");
-        try {
-            resource.getFile().delete();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void delMatches(UUID botId) {
+        matchRepository.findByBot1_IdIsAndBot2_IdIs(botId, botId).forEach(match -> {
+            match.setWinnerBot(null);
+            match.setBot2(null);
+            match.setBot1(null);
+            matchRepository.save(match);
+            matchRepository.delete(match);
+        });
+        matchRepository.findByBot1_IdIsOrBot2_IdIs(botId, botId).forEach(match -> {
+            match.setWinnerBot(null);
+            match.setBot2(null);
+            match.setBot1(null);
+            matchRepository.save(match);
+            matchRepository.delete(match);
+        });
     }
 
-    public void deleteBot(UUID botId){
-        deleteCode(botId.toString());
-        botRepository.deleteById(botId);
+    public void deleteBot(UUID botId) {
+        delMatches(botId);
+        Bot b = botRepository.findById(botId).get();
+        b.setPlayer(null);
+        botRepository.save(b);
+        botRepository.delete(b);
     }
-
-
 
 
 }

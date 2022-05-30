@@ -9,5 +9,9 @@ import java.util.UUID;
 public interface PlayerRepository extends JpaRepository<Player, UUID> {
     Optional<Player> findByEmailIsAndPasswordIs(String email, String password);
 
+    Optional<Player> findByEmail(String email);
+
+    Optional<Player> findByEmailAndIsGoogle(String email, int isGoogle);
+
 
 }

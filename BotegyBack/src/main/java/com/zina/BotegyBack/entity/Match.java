@@ -1,24 +1,35 @@
 package com.zina.BotegyBack.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Table(name = "match")
 public class Match {
+
+
+    public Match() {
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "bot_1_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bot_1_id")
     private Bot bot1;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "bot_2_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bot_2_id")
     private Bot bot2;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "winner_bot_id")
     private Bot winnerBot;
