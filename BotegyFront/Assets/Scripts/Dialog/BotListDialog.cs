@@ -82,7 +82,8 @@ namespace Dialog
         
             transform.Find("BotPanel/Header/BotName").GetComponent<Text>().text = _botList[_selectedBotIndex].name;
             transform.Find("BotPanel/Header").gameObject.SetActive(true);
-            transform.Find("BotPanel/ScrollRect/Mask/CodePanel/Text").GetComponent<Text>().text = _botList[_selectedBotIndex].code; //code
+            transform.Find("BotPanel/ScrollRect/Mask/CodePanel/Text").GetComponent<Text>().text
+                = _botList[_selectedBotIndex].code.Replace("let ", "").Replace("this.field.", "");
         }
     
         private void Clear(Transform parent)

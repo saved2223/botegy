@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 271254095}
   - component: {fileID: 271254097}
   - component: {fileID: 271254096}
+  - component: {fileID: 271254098}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -519,7 +520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -539,8 +540,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0414\u0410\u041D\u041D\u042B\u0415 \u0412\u0412\u0415\u0414\u0415\u041D\u042B
-    \n\u041D\u0415\u0412\u0415\u0420\u041D\u041E"
+  m_Text: 
 --- !u!222 &271254097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -549,6 +549,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271254094}
   m_CullTransparentMesh: 1
+--- !u!114 &271254098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271254094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 200
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &276695383
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,6 +5868,7 @@ GameObject:
   - component: {fileID: 2011294095}
   - component: {fileID: 2011294097}
   - component: {fileID: 2011294096}
+  - component: {fileID: 2011294098}
   m_Layer: 5
   m_Name: Message
   m_TagString: Untagged
@@ -5887,7 +5908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5907,8 +5928,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0414\u0410\u041D\u041D\u042B\u0415 \u0412\u0412\u0415\u0414\u0415\u041D\u042B
-    \n\u041D\u0415\u0412\u0415\u0420\u041D\u041E"
+  m_Text: 
 --- !u!222 &2011294097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5917,6 +5937,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011294094}
   m_CullTransparentMesh: 1
+--- !u!114 &2011294098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011294094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 200
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &2014120279
 GameObject:
   m_ObjectHideFlags: 0

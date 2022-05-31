@@ -83,7 +83,7 @@ namespace AppSceneManager
             if (f3 != null)
                 f3.text = "";
 
-            ShowMessage(scene, false);
+            ShowMessage(scene);
         }
 
         public void NoLoginButtonScript()
@@ -118,6 +118,7 @@ namespace AppSceneManager
         {
             string login = loginScene.transform.Find("LayoutParent/EmailInputField").GetComponent<InputField>().text;
             string pass = loginScene.transform.Find("LayoutParent/PasswordInputField").GetComponent<InputField>().text;
+            ShowMessage(loginScene, "ЗАПРОС ВЫПОЛНЯЕТСЯ...");
 
             _processor.GeneratePostRequest<User>("log",
                 new Dictionary<string, string>()
@@ -133,7 +134,7 @@ namespace AppSceneManager
             SceneInfo.CurrUser = Serializer.DeserializeObject<User>(s);
 
             if (SceneInfo.CurrUser?.nickname == null)
-                ShowMessage(loginScene, true);
+                ShowMessage(loginScene, "ДАННЫЕ ВВЕДЕНЫ НЕВЕРНО");
             else
             {
                 SceneInfo.CurrUser.LoggedIn = true;
@@ -156,6 +157,8 @@ namespace AppSceneManager
             string username = signupScene.transform.Find("LayoutParent/UsernameInputField").GetComponent<InputField>()
                 .text;
 
+            ShowMessage(signupScene, "ЗАПРОС ВЫПОЛНЯЕТСЯ...");
+            
             _processor.GeneratePostRequest<User>("logUp",
                 new Dictionary<string, string>()
                 {
@@ -172,7 +175,7 @@ namespace AppSceneManager
 
             if (SceneInfo.CurrUser?.nickname == null)
             {
-                ShowMessage(signupScene, true);
+                ShowMessage(signupScene, "ДАННЫЕ ВВЕДЕНЫ НЕВЕРНО");
             }
             else
             {
@@ -183,14 +186,9 @@ namespace AppSceneManager
             }
         }
 
-        private void ShowMessage(GameObject scene, bool show)
+        private void ShowMessage(GameObject scene, String message = "")
         {
-            Text t = scene.transform.Find("LayoutParent/Message").GetComponent<Text>();
-
-            Color c = t.color;
-
-            c.a = show ? 1f : 0f;
-            t.color = c;
+            scene.transform.Find("LayoutParent/Message").GetComponent<Text>().text = message;
         }
 
         public void GoogleLogin()
