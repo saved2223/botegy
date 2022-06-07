@@ -183,7 +183,7 @@ namespace AppSceneManager
                 {
                     {"botId", _botList[_selectedBotIndex].id},
                     {"name", RequestProcessor.PrepareName(name)},
-                    {"code", _botList[_selectedBotIndex].code}
+                    {"code", RequestProcessor.PrepareURL(_botList[_selectedBotIndex].code)}
                 },
                 ChangeBotCoroutine);
         }

@@ -172,7 +172,7 @@ namespace AppSceneManager
             
             if (dict.Count >  0)
             {
-                str = dict.Aggregate(str, (current, entry) => current + (entry.Key + "=" + entry.Value.Replace("\n", "") + "&"));
+                str = dict.Aggregate(str, (current, entry) => current + (entry.Key + "=" + entry.Value + "&"));
 
                 str = str.Substring(0, str.Length - 1);
             }

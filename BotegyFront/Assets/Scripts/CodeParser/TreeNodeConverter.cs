@@ -33,7 +33,7 @@ namespace CodeParser
             List<ICode> scope = new List<ICode>();
             for (int i = 0; i < tree.ChildCount; i++)
             {
-                scope.Add(ConvertStatement(tree.GetChild(i)));
+                scope.Add(ConvertStatement(tree.GetChild(i).GetChild(0)));
             }
 
             return scope;
@@ -41,23 +41,23 @@ namespace CodeParser
 
         private static IStatement ConvertStatement(ITree tree)
         {
-            if (tree.GetChild(0).GetType() == typeof(ParserGrammarParser.Simple_stmtContext))
+            if (tree.GetType() == typeof(ParserGrammarParser.Simple_stmtContext))
             {
-                if (tree.GetChild(0).GetChild(0).GetType() == typeof(ParserGrammarParser.AssignContext))
+                if (tree.GetChild(0).GetType() == typeof(ParserGrammarParser.AssignContext))
                 {
 
-                    return ConvertAssign(tree.GetChild(0).GetChild(0));
+                    return ConvertAssign(tree.GetChild(0));
                 }
             
-                return ConvertFunction(tree.GetChild(0).GetChild(0));
+                return ConvertFunction(tree.GetChild(0));
             
             }
 
-            if (tree.GetChild(0).GetType() == typeof(ParserGrammarParser.WhileContext))
+            if (tree.GetType() == typeof(ParserGrammarParser.WhileContext))
             {
-                return ConvertWhile(tree.GetChild(0));
+                return ConvertWhile(tree);
             }
-            return ConvertIf(tree.GetChild(0));
+            return ConvertIf(tree);
         }
 
         private static FunctionBlock ConvertFunction(ITree tree)
