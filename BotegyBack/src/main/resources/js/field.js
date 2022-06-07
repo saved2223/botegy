@@ -10,12 +10,12 @@ class Field {
         this.player2 = null;
 
         this.turn = 0;
+
+        this.step = 0;
     }
 
     play() {
         this.text = "Начало матча.\n";
-
-        let step = 0;
 
         this.field1 = new Array(8);
         this.field2 = new Array(8);
@@ -32,12 +32,12 @@ class Field {
         }
 
         while (true) {
-            if (step >= 40) {
+            if (this.step >= 40) {
                 this.write_result(2);
                 return 2;
             }
 
-            step += 1;
+            this.step += 1;
 
             if (this.turn) this.player2.behaviour(); else this.player1.behaviour();
 
@@ -315,5 +315,13 @@ class Field {
 
         if (u != null) return u.hp;
         return -1;
+    }
+
+    is_empty(x, y) {
+        return this.field1[y][x] == null && this.field2[y][x] == null;
+    }
+
+    get_step_number() {
+        return this.step;
     }
 }
