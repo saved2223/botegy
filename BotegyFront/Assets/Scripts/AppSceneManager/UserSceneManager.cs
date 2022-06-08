@@ -125,7 +125,6 @@ namespace AppSceneManager
             {
                 ShowMessage(true);
             }
-
             else
             {
                 SceneInfo.CurrUser = user;

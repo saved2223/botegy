@@ -345,9 +345,16 @@ namespace AppSceneManager
                     InstantiateBlock(b.Condition, tr.Find("Image/Option/Condition/ExprContainerBlock"));
 
                 if (b.Scope.Count > 0)
+                {
                     SetTriggers(tr.Find("Image/Option/Scope/StatementContainerBlock"), "Statement");
-                else
-                    InstantiateBlock(b.Condition, tr.Find("Image/Option/Scope/StatementContainerBlock"));
+
+                    foreach (var c in b.Scope)
+                    {
+                        InstantiateBlock(c, tr.Find("Image/Option/Scope/StatementContainerBlock"));
+                    }
+                }
+                
+                SetTriggers(tr.Find("Image/Option/Scope/StatementContainerBlock"), "Statement");
 
                 if (b.ElseScope.Count > 0)
                 {
