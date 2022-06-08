@@ -25,10 +25,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -53,39 +49,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--			<version>2.6.6</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.security.oauth.boot</groupId>-->
-<!--			<artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
-<!--			<version>2.6.6</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.4</version>
 		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-data-rest</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_linux_x86_64 -->
 		<dependency>
 			<groupId>com.eclipsesource.j2v8</groupId>
 			<artifactId>j2v8_linux_x86_64</artifactId>
 			<version>4.8.0</version>
 		</dependency>
-
-
-
-
-
 	</dependencies>
 
 	<build>

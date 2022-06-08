@@ -9,8 +9,6 @@ import java.util.UUID;
 
 public interface BotRepository extends JpaRepository<Bot, UUID> {
 
-    List<Bot> findByPlayerIs(Player player);
-
     List<Bot> findByPlayer_Id(UUID id);
 
     List<Bot> findByName(String name);

@@ -31,6 +31,13 @@ public class BotService {
 
     }
 
+    public List<Bot> getBotsByName(String botName) {
+        return botRepository.findByName(botName);
+    }
+
+    public Bot getBot(UUID botId) {
+        return botRepository.findById(botId).get();
+    }
 
     public Bot updateBot(UUID id, String name, String code) {
         delMatches(id);
@@ -41,13 +48,9 @@ public class BotService {
         return b;
     }
 
-    public Bot getBot(UUID botId) {
-        return botRepository.findById(botId).get();
-    }
 
-    public List<Bot> getBotsByName(String botName) {
-        return botRepository.findByName(botName);
-    }
+
+
 
     public List<Bot> getBotsForPlayer(UUID id) {
         return botRepository.findByPlayer_Id(id);

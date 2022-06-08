@@ -43,7 +43,9 @@ public class MatchService {
         parameters.push(m.getBot1().getCode());
         parameters.push(m.getBot2().getCode());
 
-        InputStream s = new ByteArrayInputStream((runtime.executeStringFunction("get_match_log", parameters)).getBytes(StandardCharsets.UTF_8));
+        InputStream s = new ByteArrayInputStream(
+                (runtime.executeStringFunction("get_match_log", parameters))
+                        .getBytes(StandardCharsets.UTF_8));
         String res = "";
         try {
             res = new String(s.readAllBytes());
